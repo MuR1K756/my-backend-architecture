@@ -1,0 +1,26 @@
+@startuml
+title **Архитектура backend-приложения**
+
+package "Основные сервисы" {
+  [API Gateway] as gateway
+  [Сервис аутентификации] as auth
+  [Сервис товаров] as products
+  [Сервис заказов] as orders
+}
+
+database "База данных" as db {
+  [Пользователи]
+  [Товары]
+  [Заказы]
+}
+
+gateway --> auth : "/auth/**"
+gateway --> products : "/products/**"
+gateway --> orders : "/orders/**"
+
+auth --> db : "CRUD"
+products --> db : "CRUD"
+orders --> db : "CRUD"
+
+note right of gateway: Spring Cloud Gateway
+@enduml
